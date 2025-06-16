@@ -1,0 +1,252 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Cyan Valley - Login</title>
+
+    <!-- Favicon using external URL -->
+    <link
+      rel="icon"
+      type="image/png"
+      href="https://cdn-icons-png.flaticon.com/32/616/616408.png"
+    />
+
+    <!-- Font Awesome -->
+    <link
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css"
+      rel="stylesheet"
+    />
+
+    <style>
+      * {
+        box-sizing: border-box;
+        margin: 0;
+        padding: 0;
+      }
+
+      body {
+        font-family: "Segoe UI", sans-serif;
+        background: linear-gradient(135deg, #004d4d, #008080);
+        color: #e0f7fa;
+        height: 100vh;
+        overflow: hidden;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        transition: background 0.5s ease;
+      }
+
+      .background {
+        position: absolute;
+        top: 0;
+        left: 0;
+        height: 100%;
+        width: 100%;
+        background: url("https://images.unsplash.com/photo-1506744038136-46273834b3fb")
+          center/cover no-repeat;
+        filter: blur(10px) brightness(0.5);
+        z-index: -1;
+        animation: backgroundPulse 30s infinite ease-in-out;
+      }
+
+      @keyframes backgroundPulse {
+        0%,
+        100% {
+          filter: blur(10px) brightness(0.5);
+        }
+        50% {
+          filter: blur(6px) brightness(0.7);
+        }
+      }
+
+      .login-container {
+        background: rgba(0, 0, 0, 0.5); /* stronger dark overlay */
+        backdrop-filter: blur(20px);
+        border: 1px solid rgba(224, 247, 250, 0.3);
+        border-radius: 20px;
+        padding: 50px 40px;
+        width: 100%;
+        max-width: 420px;
+        text-align: center;
+        box-shadow: 0 0 50px rgba(0, 188, 212, 0.6);
+        animation: fadeIn 1s ease-out;
+        color: #e0f7fa;
+      }
+
+      @keyframes fadeIn {
+        0% {
+          opacity: 0;
+          transform: translateY(30px);
+        }
+        100% {
+          opacity: 1;
+          transform: translateY(0);
+        }
+      }
+
+      h1 {
+        font-size: 34px;
+        color: #e0f7fa;
+        text-shadow: 0 0 10px #00e5ff, 0 2px 4px rgba(0, 0, 0, 0.7);
+        margin-bottom: 10px;
+      }
+
+      p.subtitle {
+        color: #b2ebf2;
+        font-size: 14px;
+        margin-bottom: 30px;
+        text-shadow: 0 1px 3px rgba(0, 0, 0, 0.5);
+      }
+
+      .form-group {
+        position: relative;
+        margin-bottom: 25px;
+      }
+
+      .form-group input {
+        width: 100%;
+        padding: 12px 40px 12px 14px;
+        background: rgba(0, 0, 0, 0.3); /* darker input background */
+        border: 1px solid #00bcd4;
+        border-radius: 8px;
+        color: #e0f7fa;
+        font-size: 15px;
+        transition: all 0.3s ease;
+      }
+
+      .form-group input:focus {
+        outline: none;
+        background: rgba(0, 0, 0, 0.4);
+        box-shadow: 0 0 8px #00bcd4;
+      }
+
+      .form-group label {
+        position: absolute;
+        left: 14px;
+        top: 50%;
+        transform: translateY(-50%);
+        color: #b2ebf2;
+        font-size: 14px;
+        pointer-events: none;
+        transition: all 0.3s ease;
+        text-shadow: 0 1px 1px rgba(0, 0, 0, 0.7);
+      }
+
+      .form-group input:focus + label,
+      .form-group input:not(:placeholder-shown) + label {
+        top: -10px;
+        left: 10px;
+        font-size: 11px;
+        background-color: rgba(0, 77, 77, 0.8);
+        padding: 0 5px;
+        color: #00e5ff;
+        text-shadow: 0 1px 2px rgba(0, 0, 0, 0.9);
+      }
+
+      .form-group .fa {
+        position: absolute;
+        right: 14px;
+        top: 50%;
+        transform: translateY(-50%);
+        color: #b2ebf2;
+        text-shadow: 0 1px 2px rgba(0, 0, 0, 0.6);
+      }
+
+      button {
+        width: 100%;
+        padding: 12px;
+        border: none;
+        border-radius: 8px;
+        background: linear-gradient(90deg, #00acc1, #007d7d);
+        color: #e0f7fa;
+        font-weight: bold;
+        font-size: 16px;
+        cursor: pointer;
+        transition: transform 0.3s, box-shadow 0.3s;
+        box-shadow: 0 4px 16px rgba(0, 172, 193, 0.6);
+      }
+
+      button:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 8px 24px rgba(0, 172, 193, 0.8);
+      }
+
+      .link-text {
+        margin-top: 20px;
+        font-size: 13px;
+      }
+
+      .link-text a {
+        color: #80deea;
+        text-decoration: none;
+        text-shadow: 0 1px 2px rgba(0, 0, 0, 0.7);
+      }
+
+      .link-text a:hover {
+        text-decoration: underline;
+      }
+
+      .footer {
+        margin-top: 30px;
+        font-size: 11px;
+        color: #80deea;
+        text-shadow: 0 1px 2px rgba(0, 0, 0, 0.7);
+      }
+
+      @media (max-width: 500px) {
+        .login-container {
+          padding: 35px 25px;
+        }
+
+        h1 {
+          font-size: 28px;
+        }
+      }
+    </style>
+  </head>
+
+  <body>
+    <div class="background"></div>
+
+    <div class="login-container">
+      <h1>Cyan Valley</h1>
+      <p class="subtitle">Enter the world of magic, mystery and adventure.</p>
+
+      <form onsubmit="return handleLogin(event)">
+        <div class="form-group">
+          <input type="text" id="username" placeholder=" " required />
+          <label for="username">Mystic-Name</label>
+          <i class="fa fa-user"></i>
+        </div>
+
+        <div class="form-group">
+          <input type="password" id="password" placeholder=" " required />
+          <label for="password">Magic-Code</label>
+          <i class="fa fa-lock"></i>
+        </div>
+
+        <button type="submit">Explore the Valley!</button>
+      </form>
+
+      <div class="link-text">New here? <a href="#">Begin Your Journey!</a></div>
+
+      <div class="footer">© 2025 Cyan Valley Studios</div>
+    </div>
+
+    <script>
+      function handleLogin(e) {
+        e.preventDefault();
+        const button = e.target.querySelector("button");
+        button.innerText = "Entering...";
+        button.disabled = true;
+        setTimeout(() => {
+          button.innerText = "Enter the Valley";
+          button.disabled = false;
+          alert("Login functionality not implemented.");
+        }, 2000);
+        return false;
+      }
+    </script>
+  </body>
+</html>
