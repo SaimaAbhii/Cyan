@@ -1,0 +1,17 @@
+---
+- name: Deploy Nginx Container
+  hosts: localhost
+# become: true
+  tasks:
+    - name: Build Docker image
+      command: docker build -t my_nginx .
+
+    - name: remove existing container
+      command: docker rm -f mynginx_container
+
+    - name: Run Docker container
+      command: docker run -d -p 8099:80 --name mynginx_container my_nginx
+
+    - name: Print success message
+      debug:
+        msg: "Deployment Successful"
