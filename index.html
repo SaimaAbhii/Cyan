@@ -14,6 +14,9 @@
   <!-- Particles.js -->
   <script src="https://cdn.jsdelivr.net/npm/particles.js@2.0.0/particles.min.js"></script>
 
+  <!-- Typed.js -->
+  <script src="https://cdn.jsdelivr.net/npm/typed.js@2.0.12"></script>
+
   <style>
     * {
       box-sizing: border-box;
@@ -55,7 +58,7 @@
     @keyframes fadeIn {
       from {
         opacity: 0;
-        transform: translateY(20px);
+        transform: translateY(30px);
       }
       to {
         opacity: 1;
@@ -71,11 +74,12 @@
       margin-bottom: 10px;
     }
 
-    p.subtitle {
+    .subtitle {
       text-align: center;
       font-size: 14px;
       margin-bottom: 30px;
       color: #b2ebf2;
+      min-height: 20px;
     }
 
     .form-group {
@@ -126,6 +130,13 @@
       transform: translateY(-50%);
       color: #80deea;
       cursor: pointer;
+    }
+
+    .strength {
+      font-size: 11px;
+      color: #80deea;
+      margin-top: 4px;
+      text-align: right;
     }
 
     button {
@@ -182,7 +193,7 @@
 
   <div class="login-container">
     <h1>Cyan Valley</h1>
-    <p class="subtitle">Enter the world of magic, mystery & adventure</p>
+    <p class="subtitle"><span id="typed-text"></span></p>
 
     <form onsubmit="return handleLogin(event)">
       <div class="form-group">
@@ -192,9 +203,10 @@
       </div>
 
       <div class="form-group">
-        <input type="password" id="password" placeholder=" " required />
+        <input type="password" id="password" placeholder=" " required oninput="checkStrength(this.value)" />
         <label for="password">Magic-Code</label>
         <i class="fa fa-eye" onclick="togglePassword()"></i>
+        <div class="strength" id="strength-text"></div>
       </div>
 
       <button type="submit">Explore the Valley!</button>
@@ -205,6 +217,15 @@
   </div>
 
   <script>
+    // Typed.js Animation
+    new Typed("#typed-text", {
+      strings: ["Enter the world of magic..mystery..adventure!", "Forge your destiny in Cyan Valley..."],
+      typeSpeed: 40,
+      backSpeed: 25,
+      loop: true
+    });
+
+    // Handle login
     function handleLogin(e) {
       e.preventDefault();
       const button = e.target.querySelector("button");
@@ -220,20 +241,36 @@
       return false;
     }
 
+    // Toggle Password
     function togglePassword() {
-      const passwordInput = document.getElementById("password");
-      const icon = passwordInput.nextElementSibling.nextElementSibling;
-      if (passwordInput.type === "password") {
-        passwordInput.type = "text";
+      const input = document.getElementById("password");
+      const icon = input.nextElementSibling.nextElementSibling;
+      if (input.type === "password") {
+        input.type = "text";
         icon.classList.remove("fa-eye");
         icon.classList.add("fa-eye-slash");
       } else {
-        passwordInput.type = "password";
+        input.type = "password";
         icon.classList.remove("fa-eye-slash");
         icon.classList.add("fa-eye");
       }
     }
 
+    // Password Strength Checker
+    function checkStrength(password) {
+      const strength = document.getElementById("strength-text");
+      let score = 0;
+      if (password.length > 5) score++;
+      if (password.match(/[A-Z]/)) score++;
+      if (password.match(/[0-9]/)) score++;
+      if (password.match(/[^a-zA-Z0-9]/)) score++;
+
+      const levels = ["Too weak", "Weak", "Moderate", "Strong", "Very strong"];
+      strength.innerText = levels[score];
+      strength.style.color = ["#f44336", "#ff9800", "#ffc107", "#4caf50", "#00e676"][score];
+    }
+
+    // Particles.js Config
     particlesJS("particles-js", {
       particles: {
         number: { value: 60 },
